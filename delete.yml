@@ -1,0 +1,22 @@
+# This file use docker_image module to delete docker images for zcc
+---
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: delete zcc sdkserver image
+    docker_image:
+      name: zcc-sdkserver
+      state: absent
+
+  - name: delete zcc httpd image
+    docker_image:
+      name: zcc-http
+      state: absent
+
+
+  - name: delete base image
+    docker_image:
+      name: zcc-base
+      state: absent
+

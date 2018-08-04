@@ -1,0 +1,27 @@
+# This file use docker_image module to build docker images for zcc
+---
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+
+  - name: build base image
+    docker_image:
+      path: .
+      dockerfile: zcc-base-dockerfile
+      name: zcc-base
+      tag: latest
+
+  - name: build zcc sdkserver image
+    docker_image:
+      path: .
+      dockerfile: zcc-sdkserver-dockerfile
+      name: zcc-sdkserver
+      tag: latest
+
+  - name: build zcc httpd image
+    docker_image:
+      path: .
+      dockerfile: zcc-http-dockerfile
+      name: zcc-http
+      tag: latest

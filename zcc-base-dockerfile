@@ -1,0 +1,17 @@
+FROM s390x/ubuntu:16.04
+
+
+WORKDIR /tmp/
+
+COPY zthin_3.1.1_s390x.deb /tmp/
+
+RUN dpkg -i /tmp/zthin_3.1.1_s390x.deb
+
+COPY zcc.list /etc/apt/sources.list.d/
+
+# Install required packages and remove the apt packages cache when done.
+RUN apt-get update \
+    && apt-get install -y s390-tools sudo openssh-server bsdmainutils uuid-runtime net-tools iputils-ping\
+    && apt-get install -y --allow-unauthenticated python-zvm-sdk \
+    && apt-get install -y --allow-unauthenticated apache2 libapache2-mod-wsgi supervisor
+
