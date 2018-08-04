@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Start zcc sdk server
+    docker_container:
+      name: zcc-sdkserver
+      image: zcc-sdkserver:latest
+      interactive: yes
+      tty: yes
+      detach: yes
+      exposed_ports: 2000
+      privileged: yes
+      volumes:
+        - /dev/:/dev/:rw
+        - /home/ella/jitest/zvmsdk.conf:/etc/zvmsdk/zvmsdk.conf
+
+  - name: Start zcc http server
+    docker_container:
+      name: zcc-http
+      image: zcc-http:latest
+      interactive: yes
+      tty: yes
+      detach: yes
+      exposed_ports: 8080
+      privileged: yes
+      volumes:
+        - /home/ella/jitest/zvmsdk_httpd.conf:/etc/zvmsdk/zvmsdk.conf
