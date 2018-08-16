@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+
+  - name: Stop zcc http server
+    docker_container:
+      name: zcc-http
+      state: absent
+
+  - name: Stop zcc sdk server
+    docker_container:
+      name: zcc-sdkserver
+      state: absent
+

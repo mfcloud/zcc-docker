@@ -15,6 +15,16 @@
         - /dev/:/dev/:rw
         - /home/ella/jitest/zvmsdk.conf:/etc/zvmsdk/zvmsdk.conf
 
+  - name: Get zcc sdk server ip
+    shell: "docker inspect --format '{''{ .NetworkSettings.IPAddress }''}' zcc-sdkserver"
+    register: sdkserver_ip
+
+  - name: replace sdk server ip configuration
+    replace:
+      path: /home/ella/jitest/zvmsdk_httpd.conf
+      regexp: '^bind_addr=.*'
+      replace: 'bind_addr={{ sdkserver_ip.stdout }}'
+
   - name: Start zcc http server
     docker_container:
       name: zcc-http
